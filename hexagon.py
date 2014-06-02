@@ -1,10 +1,11 @@
 # This file should define a class for a single hex tile on the map.
-# They'll have a few methods used to obtain adjacent hexes and to obtain
-# the position of a given tile.
+# They'll have a few methods used to obtain the position of a given tile
+# and similar simple tasks.
 
 
-###  TODO:  Add self.color and adjacency and path methods.  Or perhaps those
-###  should be in a map class?
+###  TODO:  Add self.color
+###  Since all hexes on the same screen are the same size, it could
+###  probably just be a map variable.
 
 class Hexagon:
     # See above.
@@ -13,7 +14,6 @@ class Hexagon:
     def __init__(self, xPos, yPos, apothem):
         self.xPos = xPos
         self.yPos = yPos
-        self.size = apothem
 
     def __repr__(self):
-        return "Hexagon at: (" + str(self.xPos) + ", " + str(self.yPos) + ") with size: " + str(self.size)
+        return "Hexagon at: (" + str(self.xPos) + ", " + str(self.yPos) + ")"
