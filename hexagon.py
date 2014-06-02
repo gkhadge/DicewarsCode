@@ -11,7 +11,7 @@ class Hexagon:
     # See above.
 
     ## xPos and yPos describe the position of the hex in axial coordinates.
-    def __init__(self, xPos, yPos, apothem):
+    def __init__(self, xPos, yPos):
         self.xPos = xPos
         self.yPos = yPos
 

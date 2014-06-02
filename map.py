@@ -8,6 +8,16 @@
 
 # Build this to be expanded, we're probably going to add a lot more to it.
 
+#         
+#    __      \                 |
+#   /  \      \                | 
+#   \__/       V               V   
+#         +x direction   +y direction 
+
+# Class uses axial coordinates with flat-topped hexagons
+# See link for more details
+# http://www.redblobgames.com/grids/hexagons/
+
 class Map:
     # See above.
 
@@ -31,25 +41,28 @@ class Map:
 
         self.xMin = xMin
         self.yMin = yMin
-        
+
+        # Store hexagons in 2D array, "grid"
+        # row index represents x distance from xmin (xPos-xMin)
+        # col index represents y distance from ymin (yPos-yMin)        
         row = []*(yMax - yMin)
         self.grid = [row]*(xMax - xMin)
         for hex in hexList:
-            self.grid[hex.xPos, hex.yPos] = hex
+            self.grid[hex.xPos-self.xMin, hex.yPos-self.yMin] = hex
 
     def adjacency(self, hex):
         # Returns a list of all adjacent hexagons to hex.
-        xPos = hex.xPos + self.xMin
-        yPos = hex.yPos + self.yMin
 
-        hex1 = self.grid[xPos - 1][yPos]
-        hex2 = self.grid[xPos + 1][yPos]
-        hex3 = self.grid[xPos][yPos - 1]
-        hex4 = self.grid[xPos][yPos + 1]
-        hex5 = self.grid[xPos - 1][yPos + 1]
-        hex6 = self.grid[xPos + 1][yPos - 1]
+        # Indices of hex in self.grid
+        xIndex = hex.xPos - self.xMin
+        yIndex = hex.yPos - self.yMin
 
-        return [hex1, hex2, hex3, hex4, hex5, hex6]
-        
+        # Going CCW
+        hex1 = self.grid[xIndex + 1][yIndex - 1] # upper right
+        hex2 = self.grid[xIndex - 1][yIndex]     # up
+        hex3 = self.grid[xIndex - 1][yIndex]     # upper left
+        hex4 = self.grid[xIndex - 1][yIndex + 1] # lower left
+        hex5 = self.grid[xIndex][yIndex + 1]     # down
+        hex6 = self.grid[xIndex + 1][yIndex]     # lower right 
 
-        
+        return [hex1, hex2, hex3, hex4, hex5, hex6]        
