@@ -9,8 +9,8 @@
 # Build this to be expanded, we're probably going to add a lot more to it.
 
 #         
-#    __      \                 |
-#   /  \      \                | 
+#    __      \                   |
+#   /  \      \                 | 
 #   \__/       V               V   
 #         +x direction   +y direction 
 
