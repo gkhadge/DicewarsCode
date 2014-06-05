@@ -8,15 +8,22 @@
 
 # Build this to be expanded, we're probably going to add a lot more to it.
 
-#         
-#    __      \                   |
-#   /  \      \                 | 
-#   \__/       V               V   
-#         +x direction   +y direction 
 
-# Class uses axial coordinates with flat-topped hexagons
+#         o
+#      o     o
+#   o           o                   o
+#   o           o                     o
+#   o           o    ---->              o 
+#   o           o                         V   
+#      o     o     +x direction    +y direction 
+#         o 
+# Class uses axial coordinates with pointy-topped hexagons
 # See link for more details
 # http://www.redblobgames.com/grids/hexagons/
+
+# See for code organization and discussion:
+# https://docs.google.com/a/g.hmc.edu/document/d/1qaDAmrd0Lflz5zCO4VxH2M4TKGrQX58B_4DWbv6YZWk/edit
+
 
 class Map:
     # See above.
@@ -58,11 +65,11 @@ class Map:
         yIndex = hex.yPos - self.yMin
 
         # Going CCW
-        hex1 = self.grid[xIndex + 1][yIndex - 1] # upper right
-        hex2 = self.grid[xIndex - 1][yIndex]     # up
-        hex3 = self.grid[xIndex - 1][yIndex]     # upper left
-        hex4 = self.grid[xIndex - 1][yIndex + 1] # lower left
-        hex5 = self.grid[xIndex][yIndex + 1]     # down
-        hex6 = self.grid[xIndex + 1][yIndex]     # lower right 
+        hex1 = self.grid[xIndex + 1][yIndex]     # right
+        hex2 = self.grid[xIndex + 1][yIndex - 1] # upper right
+        hex3 = self.grid[xIndex][yIndex - 1]     # upper left
+        hex4 = self.grid[xIndex - 1][yIndex]     # left
+        hex5 = self.grid[xIndex - 1][yIndex + 1] # lower left
+        hex6 = self.grid[xIndex][yIndex + 1]     # lower right 
 
         return [hex1, hex2, hex3, hex4, hex5, hex6]        
