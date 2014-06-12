@@ -4,8 +4,6 @@
 
 
 ###  TODO:  Add self.color
-###  Since all hexes on the same screen are the same size, it could
-###  probably just be a map variable.
 
 class Hexagon:
     # See above.
