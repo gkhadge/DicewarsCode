@@ -40,15 +40,30 @@ INVALID = -1
 class Map2:
     # See above.
 
-    def __init__(self):
+    def __init__(self, numRows, numCols, hexList):
         # hexList is a list containing hexagons.
 
         # There's got to be a better way to do this.
-        self.ROWS = 28
-        self.COLS = 32
+        self.ROWS = numRows
+        self.COLS = numCols
 
-        # Store hexagons in 2D array, "grid"       
-        self.grid = [[0 for x in xrange(self.COLS)] for x in xrange(self.ROWS)]
+        self.grid = [[0 for y in xrange(self.COLS)] for x in xrange(self.ROWS)]
+        # Store hexagons in 2D array, "grid"
+        for x in xrange(self.ROWS):
+            for y in xrange(self.COLS):
+                for hexagon in hexList:
+                    if (hexagon.xPos == x) and (hexagon.yPos == y):
+                        self.grid[x][y] = hexagon
+                        # It might be worth it to remove hexagon from hexList,
+                        # but I'd expect weird behavior if we do that.
+
+    def setHexToPos(self, x, y, hexagon):
+        # Sets the item in self.grid at (x,y) to hexagon
+        # Assumes that x and y are in range
+
+        self.grid[x][y] = hexagon
+        return ''
+
         
     def neighbor(self, x, y, direction):
         # Returns state of hexagon in the direction of direction
@@ -74,3 +89,78 @@ class Map2:
         if newx < 0 or newx >= self.ROWS or newy < 0 or newy >= self.COLS:
             return INVALID
         return self.grid[newx][newy]
+
+    def neighborList(self, x, y):
+        # Returns a list of all hexagons adjacent to the hexagon stored in x, y
+        result = []
+        for i in xrange(5):
+            result.append(self.neighbor(x, y, i))
+        return result
+
+    def oddRowOffsetToCube(self, r, q):
+        # Takes the input coordinates in (r,q) in odd row offset to cube coordinates.
+
+        x = q - (r - (r&1)) / 2
+        z = r
+        y = -1 * x - z
+        return [x, y, z]
+
+    def cubeToAxial(self, x, y, z):
+        # Takes the input coordinates in (x,y,z) cube to axial coordinates.
+
+        q = x
+        r = z
+        return [r, q]
+
+    def oddRowOffsetToAxial(self, r, q):
+        # Takes the input coordinates in (r,q) odd row offset to axial coordinates.
+
+        cubeCoord = self.oddRowOffsetToCube(r, q)
+        result = self.cubeToAxial(cubeCoord[0], cubeCoord[1], cubeCoord[2])
+        return result
+
+    def axialToCube(self, r, q)
+        # Takes the input coordinates in (r,q) axial to cube coordinates.
+
+        x = q
+        z = r
+        y = -1 * x - z
+        return [x, y, z]
+
+    def cubeToOddRowOffset(self, x, y, z):
+        # Takes the input coordinates in (x,y,z) cube to odd row offset.
+
+        q = x + (z - (z&1)) / 2
+        r = z
+        return [r, q]
+
+    def axialToOddRowOffset(self, z, x):
+        # Takes the input coordinates (z, x) axial to odd row offset.
+
+        cubeCoord = self.axialToCube(z,x)
+        result = self.cubeToOddRowOffset(self, cubeCoord[0], cubeCoord[1], cubeCoord[2])
+        return result
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+        
