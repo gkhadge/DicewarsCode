@@ -57,11 +57,11 @@ class Map2:
                         # It might be worth it to remove hexagon from hexList,
                         # but I'd expect weird behavior if we do that.
 
-    def setHexToPos(self, x, y, hexagon):
-        # Sets the item in self.grid at (x,y) to hexagon
+    def setHexToPos(self, hexagon):
+        # Sets the item in self.grid to hexagon at the hexagon's position
         # Assumes that x and y are in range
 
-        self.grid[x][y] = hexagon
+        self.grid[hexagon.xPos][hexagon.yPos] = hexagon
         return ''
 
         
@@ -97,6 +97,8 @@ class Map2:
             result.append(self.neighbor(x, y, i))
         return result
 
+    # I'm thinking about the possibility of moving all these conversion schemes
+    # into the hexagon class.
     def oddRowOffsetToCube(self, r, q):
         # Takes the input coordinates in (r,q) in odd row offset to cube coordinates.
 
@@ -141,8 +143,20 @@ class Map2:
         result = self.cubeToOddRowOffset(self, cubeCoord[0], cubeCoord[1], cubeCoord[2])
         return result
 
+    def hexDistance(self, hex1, hex2):
+        # Returns the hex distance between the two given hexagons.
 
+        x1 = hex1.xPos
+        y1 = hex1.yPos
+        x2 = hex2.xPos
+        y2 = hex2.yPos
 
+        cube1 = self.oddRowOffsetToCube(x1, y1)
+        cube2 = self.oddRowOffsetToCube(x2, y2)
+
+        distance = (abs(cube1[0] - cube2[0]) + abs(cube1[1] - cube2[1]) +
+                    abs(cube1[2] - cube2[2]))/2
+        return distance
 
 
 
